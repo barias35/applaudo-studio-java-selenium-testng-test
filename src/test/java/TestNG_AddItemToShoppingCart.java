@@ -1,18 +1,25 @@
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.AutomationPage;
+import pages.AutomationPO;
+import pages.ShoppingCartSummaryPO;
 import utils.Config;
 
-public class TestNG_AddItemToShoppingCart {
+public class TestNG_AddItemToShoppingCart extends BaseTest {
 
-    AutomationPage mainPage = null;
+    AutomationPO mainPage = null;
 
     @BeforeMethod
     private void setUp(){
-        mainPage = new AutomationPage();
-        mainPage.setUp(Config.BASE_URI);
+        //Using ChromeOptions
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(false);
+        this.browserInitializer(options);
+        this.setUp(Config.BASE_URI);
+        mainPage = new AutomationPO(this.browser);
     }
 
     @Test
@@ -20,19 +27,22 @@ public class TestNG_AddItemToShoppingCart {
         String productForSearch = "Dress";
         try{
             Assert.assertTrue(mainPage.isMainPageIsVisible(), "Automation page doesn't shows correctly");
-            Assert.assertTrue(mainPage.addItemToShoppingCart(productForSearch), "The item wasn't added succesfully to the cart!");
+            WebElement selectedItem = mainPage.selectRandomItem(productForSearch);
+            Assert.assertNotNull(selectedItem, "Random item couldn't be selected, please verify!");
+            String itemName = selectedItem.getAttribute("alt");
+            ShoppingCartSummaryPO shoppingCartSummaryPO = mainPage.addToCartSelectedItem(selectedItem);
+            Assert.assertTrue(shoppingCartSummaryPO.isAddedSelectedItem(itemName),
+                    String.format("The item %s wasn't added succesfully to the cart!", itemName));
+
         }catch (AssertionError ex){
             throw  ex;
         }catch (Exception ex){
-            throw  ex;
+            throw ex;
         }
     }
 
     @AfterMethod
     private void cleanUp(){
-
-        if (mainPage != null)
-            mainPage.tearDown();
-
+        this.tearDown();
     }
 }

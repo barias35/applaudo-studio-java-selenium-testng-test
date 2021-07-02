@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -11,7 +12,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
-public class AutomationPage extends BasePage {
+public class AutomationPO extends BasePO {
 
     @FindBy(xpath = "//ul[contains(@class,'sf-menu clearfix')]")
     private WebElement mainMenu;
@@ -32,13 +33,22 @@ public class AutomationPage extends BasePage {
     private final By bannerAddedProductToShoppingCart = By.xpath("//div[contains(@class,'layer_cart_cart col-xs-12')]");
     private final int _verifyingBannerAddedShoppingCartRetries = 3;
 
-    public AutomationPage() {
-        super();
+    private ShoppingCartSummaryPO shoppingCartSummaryPO;
+
+    public ShoppingCartSummaryPO getShoppingCartSummaryPO() {
+        if (shoppingCartSummaryPO == null) {
+            shoppingCartSummaryPO = new ShoppingCartSummaryPO(this.browser);
+        }
+        return shoppingCartSummaryPO;
+    }
+
+    public AutomationPO(WebDriver browser) {
+        super(browser);
         PageFactory.initElements(this.browser, this);
     }
 
     public boolean isMainPageIsVisible() {
-        return mainMenu.isDisplayed();
+        return waitUntilVisibilityOfElement(this.mainMenu);
     }
 
     public List<WebElement> searchItems(String itemToSearch) {
@@ -53,22 +63,8 @@ public class AutomationPage extends BasePage {
         return alertNotFoundItems.isDisplayed();
     }
 
-    public boolean addItemToShoppingCart(String itemToSearch) {
-
-        try {
-            List items = searchItems(itemToSearch);
-            WebElement selectedProduct = selectRandomProduct(items);
-            String productNameSelected = selectedProduct.getAttribute("alt");
-            addToCartXpath = String.format(addToCartXpath, productNameSelected);
-            ShoppingCartSummaryPage shoppingCartSummaryPage = addToCartSelectedProduct(selectedProduct);
-            return shoppingCartSummaryPage.isAddedSelectedProduct(productNameSelected);
-
-
-        } catch (Exception ex) {
-
-        }
-
-        return false;
+    public ShoppingCartSummaryPO addItemToShoppingCart(String itemToSearch) {
+        return this.getShoppingCartSummaryPO();
     }
 
     public boolean validateStoreInformation(String address, String phoneNumber, String emailAddress) {
@@ -79,20 +75,26 @@ public class AutomationPage extends BasePage {
                 footerLabelEmailAddress.getText().equalsIgnoreCase(emailAddress);
     }
 
-    private WebElement selectRandomProduct(List<WebElement> items) throws InterruptedException {
+    public WebElement selectRandomItem(String itemToSearch)  {
+
+        List<WebElement> items = searchItems(itemToSearch);
+
         if (items.size() == 0)
             return null;
 
         Random random = new Random();
         int selectedItemIndex = random.nextInt(items.size());
-        return items.get(selectedItemIndex);
+        WebElement selectedProduct = items.get(selectedItemIndex);
+        String productNameSelected = selectedProduct.getAttribute("alt");
+        addToCartXpath = String.format(addToCartXpath, productNameSelected);
+        return selectedProduct;
     }
 
-    private ShoppingCartSummaryPage addToCartSelectedProduct(WebElement selectedProduct) throws InterruptedException {
+    public ShoppingCartSummaryPO addToCartSelectedItem(WebElement selectedProduct) {
         tryAddItemToShoppingCart(selectedProduct);
         WebElement processToCheckOutButton = waitUntil(buttonProcessToCheckOutXpath);
         processToCheckOutButton.click();
-        return new ShoppingCartSummaryPage(browser);
+        return this.getShoppingCartSummaryPO();
     }
 
     private void tryAddItemToShoppingCart(WebElement selectedProduct)  {
@@ -102,10 +104,10 @@ public class AutomationPage extends BasePage {
             try {
                 scrollAndHoverElement(selectedProduct);
                 addToCartButton.click();
-                waitUntilVisibilityOfElement(bannerAddedProductToShoppingCart);
-                break;
+               if(waitUntilVisibilityOfElement(bannerAddedProductToShoppingCart))
+                   break;
+
             } catch (Exception ex) {
-                browser.navigate().refresh();
             }
         }
     }

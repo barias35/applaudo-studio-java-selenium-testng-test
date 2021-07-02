@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class ShoppingCartSummaryPage extends BasePage {
+public class ShoppingCartSummaryPO extends BasePO {
 
     @FindBy(xpath = "//table[@id='cart_summary']/tbody/tr[1]/td[@class='cart_description']/p/a")
     private WebElement columnProductName;
@@ -17,20 +17,25 @@ public class ShoppingCartSummaryPage extends BasePage {
 
     private By bannerEmptyCartXpath = By.xpath("//p[text()='Your shopping cart is empty.']");
 
-    public ShoppingCartSummaryPage(WebDriver browser){
+    public ShoppingCartSummaryPO(WebDriver browser){
         super(browser);
         PageFactory.initElements(browser, this);
     }
 
-    public boolean isAddedSelectedProduct(String productName){
-        scrollToVisibleElement(columnProductName);
-        return columnProductName.getText().equalsIgnoreCase(productName);
+    public boolean isAddedSelectedItem(String itemName){
+        scrollToVisibleElement(this.columnProductName);
+        if(waitUntilVisibilityOfElement(this.columnProductName))
+           return this.columnProductName.getText().equalsIgnoreCase(itemName);
+
+        return false;
     }
 
-    public boolean deleteAddedProduct(){
-        hoverToElement(dropDownMyShoppingCart);
-        iconButtonRemoveItemFromShoppingCart.click();
-        return waitUntilVisibilityOfElement(bannerEmptyCartXpath);
+    public void deleteAddedItem(){
+        hoverToElement(this.dropDownMyShoppingCart);
+        this.iconButtonRemoveItemFromShoppingCart.click();
     }
 
+    public boolean isAddedItemDeleted(){
+        return waitUntilVisibilityOfElement(this.bannerEmptyCartXpath);
+    }
 }

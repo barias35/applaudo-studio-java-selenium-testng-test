@@ -2,17 +2,18 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.AutomationPage;
+import pages.AutomationPO;
 import utils.Config;
 
-public class TestNG_ValidateFooterStoreInformation {
+public class TestNG_ValidateFooterStoreInformation extends BaseTest {
 
-    AutomationPage mainPage = null;
+    AutomationPO mainPage = null;
 
     @BeforeMethod
     private void setUp(){
-        mainPage = new AutomationPage();
-        mainPage.setUp(Config.BASE_URI);
+        this.browserInitializer();
+        this.setUp(Config.BASE_URI);
+        mainPage = new AutomationPO(this.browser);
     }
 
     @Test
@@ -33,9 +34,6 @@ public class TestNG_ValidateFooterStoreInformation {
 
     @AfterMethod
     private void cleanUp(){
-
-        if (mainPage != null)
-            mainPage.tearDown();
-
+            tearDown();
     }
 }

@@ -12,35 +12,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class FluentWaitHandler extends DriverHandler {
+public class FluentWaitHandler {
 
     FluentWait<WebDriver> fluentWait;
+    public WebDriver browser;
 
-    public FluentWaitHandler() {
-        super();
-        fluentWait = new FluentWait<WebDriver>(this.browser);
-        fluentWait.withTimeout(Duration.ofSeconds(5));
-    }
-
-    public FluentWaitHandler(WebDriver browser) {
-        super(browser);
-        fluentWait = new FluentWait<WebDriver>(this.browser);
+    public FluentWaitHandler(WebDriver driver) {
+        this.browser = driver;
+        fluentWait = new FluentWait<>(this.browser);
         fluentWait.withTimeout(Duration.ofSeconds(10));
     }
 
     public WebElement waitUntil(By elementToWaitFor) {
-        fluentWait.ignoring(NoSuchElementException.class);
-        return fluentWait.until(ExpectedConditions.presenceOfElementLocated(elementToWaitFor));
+        try{
+            fluentWait.ignoring(NoSuchElementException.class);
+            return fluentWait.until(ExpectedConditions.presenceOfElementLocated(elementToWaitFor));
+        }catch (Exception ex){
+
+        }
+       return null;
     }
 
     public boolean waitUntilVisibilityOfElement(By elementToWaitFor) {
-        fluentWait.ignoring(NoSuchElementException.class);
-        return fluentWait.until(ExpectedConditions.visibilityOfElementLocated(elementToWaitFor))!=null;
+        try {
+            fluentWait.ignoring(NoSuchElementException.class);
+            return fluentWait.until(ExpectedConditions.visibilityOfElementLocated(elementToWaitFor))!=null;
+        }catch (Exception ex){}
+        return false;
     }
 
     public boolean waitUntilVisibilityOfElement(WebElement elementToWaitFor) {
-        fluentWait.ignoring(NoSuchElementException.class);
-        return fluentWait.until(ExpectedConditions.visibilityOf(elementToWaitFor))!=null;
+        try {
+            fluentWait.ignoring(NoSuchElementException.class);
+            return fluentWait.until(ExpectedConditions.visibilityOf(elementToWaitFor)) != null;
+        }catch (Exception ex){}
+        return false;
     }
 
     public List<WebElement> waitUntilList(By elementsToWaitFor) {
@@ -49,7 +55,7 @@ public class FluentWaitHandler extends DriverHandler {
         }catch (Exception ex){
             System.out.println("An error has occured!: " + ex.getMessage());
         }
-        return new ArrayList<WebElement>();
+        return new ArrayList<>();
     }
 }
 

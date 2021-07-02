@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.testng.annotations.BeforeClass;
+import utils.Config;
 
 import java.util.concurrent.TimeUnit;
 
@@ -13,25 +14,24 @@ public class DriverHandler {
 
     public WebDriver browser;
 
-    private void browserInitializer(){
-        this.browser = new ChromeDriver();
+    private void browserInstance(ChromeOptions options){
+        this.browser = new ChromeDriver(options);
         this.browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         this.browser.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         this.browser.manage().window().maximize();
     }
-    public DriverHandler() {
-        System.setProperty("webdriver.chrome.driver", "c:\\selenium-drivers\\chromedriver.exe");
-
+    public void browserInitializer(){
         if (isBrowserClosed(this.browser))
-        browserInitializer();
+        browserInstance(new ChromeOptions());
     }
 
-    public DriverHandler(WebDriver browser) {
+    public void browserInitializer(ChromeOptions options){
+        if (isBrowserClosed(this.browser))
+        browserInstance(options);
+    }
 
-        if (isBrowserClosed(browser))
-            browserInitializer();
-        else
-        this.browser = browser;
+    public DriverHandler() {
+        System.setProperty(Config.DRIVER, Config.DRIVER_EXE_PATH);
     }
 
     public boolean isBrowserClosed(WebDriver browser)
