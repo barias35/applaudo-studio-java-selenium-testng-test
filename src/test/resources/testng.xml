@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Applaudo Studio TestSuite Challenge" >
+    <test name="TestNG_AddItemToShoppingCart" >
+        <classes>
+            <class name="TestNG_AddItemToShoppingCart" />
+        </classes>
+    </test>
+    <test name="TestNG_DeleteItemFromShoppingCart" >
+        <classes>
+            <class name="TestNG_DeleteItemFromShoppingCart" />
+        </classes>
+    </test>
+    <test name="TestNG_SearchItems">
+        <classes>
+            <class name="TestNG_SearchItems" />
+        </classes>
+    </test>
+    <test name="TestNG_ValidateFooterStoreInformation" >
+        <classes>
+            <class name="TestNG_ValidateFooterStoreInformation" />
+        </classes>
+    </test>
+</suite>
