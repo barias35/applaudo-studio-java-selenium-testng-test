@@ -19,7 +19,7 @@ public class TestNG_SearchItems extends BaseTest {
     public void testSearchingExistingItems() {
         String productForSearch = "Dress";
         try {
-            Assert.assertTrue(mainPage.isMainPageIsVisible(), "Automation page doesn't shows correctly");
+            Assert.assertTrue(mainPage.isMainPageVisible(), "Automation page doesn't shows correctly");
             Assert.assertTrue(mainPage.searchItems(productForSearch).size() > 0, "The items weren't found successfully!");
         } catch (AssertionError ex) {
             throw ex;
@@ -32,7 +32,7 @@ public class TestNG_SearchItems extends BaseTest {
     public void testSearchingNotExistingItems() {
         String productForSearch = "Qa Automation";
         try {
-            Assert.assertTrue(mainPage.isMainPageIsVisible(), "Automation page doesn't shows correctly");
+            Assert.assertTrue(mainPage.isMainPageVisible(), "Automation page doesn't shows correctly");
             Assert.assertEquals(mainPage.searchItems(productForSearch).size(), 0, "The items weren't found successfully!");
             Assert.assertTrue(mainPage.isVisibleNotFoundItemsAlert(), "The items weren't found successfully!");
 

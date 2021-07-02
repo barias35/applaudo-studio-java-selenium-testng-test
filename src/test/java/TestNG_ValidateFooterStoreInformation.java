@@ -22,7 +22,7 @@ public class TestNG_ValidateFooterStoreInformation extends BaseTest {
         final String phoneNumber = "(347) 466-7432";
         final String emailAddress = "support@seleniumframework.com";
         try {
-            Assert.assertTrue(mainPage.isMainPageIsVisible(), "Automation page doesn't shows correctly");
+            Assert.assertTrue(mainPage.isMainPageVisible(), "Automation page doesn't shows correctly");
             Assert.assertTrue(mainPage.validateStoreInformation(address, phoneNumber, emailAddress),
                     "The information of store didn't match!");
         } catch (AssertionError ex) {

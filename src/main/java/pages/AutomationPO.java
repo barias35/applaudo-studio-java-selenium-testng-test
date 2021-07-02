@@ -47,7 +47,7 @@ public class AutomationPO extends BasePO {
         return shoppingCartSummaryPO;
     }
 
-    public boolean isMainPageIsVisible() {
+    public boolean isMainPageVisible() {
         return waitUntilVisibilityOfElement(this.mainMenu);
     }
 
@@ -65,10 +65,6 @@ public class AutomationPO extends BasePO {
             return alertNotFoundItems.isDisplayed();
         }
         return false;
-    }
-
-    public ShoppingCartSummaryPO addItemToShoppingCart(String itemToSearch) {
-        return this.getShoppingCartSummaryPO();
     }
 
     public boolean validateStoreInformation(String address, String phoneNumber, String emailAddress) {
@@ -89,28 +85,6 @@ public class AutomationPO extends BasePO {
         Random random = new Random();
         int selectedItemIndex = random.nextInt(items.size());
         return items.get(selectedItemIndex);
-    }
-
-    public List<WebElement> selectRandomMultipleItems(String itemToSearch, int numberOfItemsToBeAdded) {
-
-        List<WebElement> items = searchItems(itemToSearch);
-
-        if (items.size() == 0)
-            return new ArrayList<>();
-
-        if (numberOfItemsToBeAdded > items.size())
-            numberOfItemsToBeAdded = items.size();
-
-        Random random = new Random();
-        int[] indexItemsSelected = new int[numberOfItemsToBeAdded];
-        for (int i = 0; i < numberOfItemsToBeAdded; i++) {
-            indexItemsSelected[i] = random.nextInt(items.size());
-        }
-        List<WebElement> itemsSelected = new ArrayList<>();
-        for (int indexSelectedItem : indexItemsSelected) {
-            itemsSelected.add(items.get(indexSelectedItem));
-        }
-        return itemsSelected;
     }
 
     public void addToCartSelectedItem(WebElement selectedProduct) {

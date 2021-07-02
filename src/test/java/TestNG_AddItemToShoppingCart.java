@@ -1,5 +1,4 @@
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -7,8 +6,6 @@ import org.testng.annotations.Test;
 import pages.AutomationPO;
 import pages.ShoppingCartSummaryPO;
 import utils.Config;
-
-import java.util.List;
 
 public class TestNG_AddItemToShoppingCart extends BaseTest {
 
@@ -26,7 +23,7 @@ public class TestNG_AddItemToShoppingCart extends BaseTest {
     public void testAddingItemToShoppingCart() {
         String productForSearch = "Dress";
         try {
-            Assert.assertTrue(mainPage.isMainPageIsVisible(), "Automation page doesn't shows correctly");
+            Assert.assertTrue(mainPage.isMainPageVisible(), "Automation page doesn't shows correctly");
 
             WebElement selectedItem = mainPage.selectRandomItem(productForSearch);
             Assert.assertNotNull(selectedItem, "Random item couldn't be selected, please verify!");
