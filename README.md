@@ -1,51 +1,20 @@
 # This project was a challenge from Applaudo Studio
-markdown: kramdown
 
-For following api doc site: https://breakingbadapi.com/documentation build a class with tests that resolve below exercises:
+For following website: http://automationpractice.com/index.php build a solution to test below conditions:
 
-- Get Walter White information and print in console birthday only
+1- Add item to shopping cart
 
-- Get all characters information store them into a POJO/Model/DTO and print all characters information as below:
+2- Remove item inside shopping cart
 
-Display format in the console must be like this
+3- Search item (include at least one positive and negative condition)
 
-Character name: "Walter White"
-
-Portrayed: "Bryan Cranston"
-
-------------------------------------------------------
-
-Character name: "Jesse Pinkman"
-
-Portrayed: "Aaron Paul"
-
------------------------------------------------------
+4- Validate store information (scroll down to footer and check for Store Information)
 
 ...
 
 ## How i did it? 
 
-I needed TestNG and Rest Assured i configured [pom file](/pom.xml) with the plugins and dependencies needed,
-I also needed "jackson-databind" dependency for mapping json response into a list of class "Character"
-
-*After I finished the configuration i created the [model](src/main/java/models/Character.java), this with the purpose of cast a json response data to a class*
-
-*My next step was create my [testcase](src/test/java/ApplaudoStudioTest.java) class*,
-*this was a very challenging task because this was my first time seeing Rest Assured*
-
-*After I finished of creating my testcase, i realize that i repeated these lines in both test cases* ![image](https://user-images.githubusercontent.com/47786738/124062013-fb3d8b80-d9fd-11eb-997b-3f0c7f321fc0.png)
-
-
-*Here i just implemented "@BeforeClass" decorator in order to be used automatically for the test runner in Java*
-
-*This is how it look now*
-
-
-![image](https://user-images.githubusercontent.com/47786738/124062443-c4b44080-d9fe-11eb-8d2e-caedd7c49aa1.png)
-
-
-*Now i can use the request in both cases*
-
+I needed TestNG and Selenium i configured [pom file](/pom.xml) with the plugins and dependencies needed,
 
 *I used IntelliJ, if you clone this project you must run maven for automatically install dependencies and plugins already in the pom file*
 
