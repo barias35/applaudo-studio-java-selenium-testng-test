@@ -32,7 +32,8 @@ public class ShoppingCartSummaryPO extends BasePO {
 
     public void deleteAddedItem(){
         hoverToElement(this.dropDownMyShoppingCart);
-        this.iconButtonRemoveItemFromShoppingCart.click();
+        if (waitUntilVisibilityOfElement(this.iconButtonRemoveItemFromShoppingCart))
+            this.iconButtonRemoveItemFromShoppingCart.click();
     }
 
     public boolean isAddedItemDeleted(){

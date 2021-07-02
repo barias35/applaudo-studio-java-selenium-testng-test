@@ -59,8 +59,12 @@ public class AutomationPO extends BasePO {
 
     public boolean isVisibleNotFoundItemsAlert() {
         WebElement alertNotFoundItems = waitUntil(By.xpath("//p[@class='alert alert-warning']"));
-        System.out.println("Message from the page: " + alertNotFoundItems.getText());
-        return alertNotFoundItems.isDisplayed();
+
+        if (waitUntilVisibilityOfElement(alertNotFoundItems)) {
+            System.out.println("Message from the page: " + alertNotFoundItems.getText());
+            return alertNotFoundItems.isDisplayed();
+        }
+        return false;
     }
 
     public ShoppingCartSummaryPO addItemToShoppingCart(String itemToSearch) {
