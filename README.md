@@ -1,3 +1,4 @@
+
 # This project was a challenge from Applaudo Studio
 
 For following website: http://automationpractice.com/index.php build a solution to test below conditions:
@@ -42,7 +43,7 @@ I needed TestNG and Selenium i configured [pom file](/pom.xml) with the plugins 
 
 ![image](https://user-images.githubusercontent.com/47786738/124156197-548cd580-da65-11eb-9f0d-29063a4457de.png)
 
-* Finally the last one step go to [Config.java](src/main/java/utils/Config.java) and configure your path for the driver 
+* Finally the last step go to [Config.java](src/main/java/utils/Config.java) and configure your path for the driver 
 
 
 ![image](https://user-images.githubusercontent.com/47786738/124222807-72435480-dad0-11eb-9c50-759a0e666245.png)
