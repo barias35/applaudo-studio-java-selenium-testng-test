@@ -50,11 +50,11 @@ I needed TestNG and Selenium i configured [pom file](/pom.xml) with the plugins 
 
 
 
-# Important
+### Important
 
-### My experience with this challenge was amazing, adding item to the shopping cart was a bit difficult due the unstability of the page, sometimes doesn't work i tried to figure out a way to avoid this but i couldn't most of the time will work.
+My experience with this challenge was amazing, adding item to the shopping cart was a bit difficult due the unstability of the page, sometimes doesn't work i tried to figure out a way to avoid this but i couldn't most of the time will work.
 
 I realize i can improve, more abstraction for the driver handler, parallel testing.
 
 
-# Thank you! Applaudo Studio
+Thank you! Applaudo Studio for this opportunity
