@@ -6,7 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utils.ThreadSleepHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -88,25 +90,51 @@ public class AutomationPO extends BasePO {
 
         Random random = new Random();
         int selectedItemIndex = random.nextInt(items.size());
-        WebElement selectedProduct = items.get(selectedItemIndex);
-        String productNameSelected = selectedProduct.getAttribute("alt");
-        addToCartXpath = String.format(addToCartXpath, productNameSelected);
-        return selectedProduct;
+        return items.get(selectedItemIndex);
     }
 
-    public ShoppingCartSummaryPO addToCartSelectedItem(WebElement selectedProduct) {
+    public List<WebElement> selectRandomMultipleItems(String itemToSearch, int numberOfItemsToBeAdded)  {
+
+        List<WebElement> items = searchItems(itemToSearch);
+
+        if (items.size() == 0)
+            return new ArrayList<>();
+
+        if(numberOfItemsToBeAdded > items.size())
+            numberOfItemsToBeAdded = items.size();
+
+        Random random = new Random();
+        int [] indexItemsSelected = new int[numberOfItemsToBeAdded];
+        for (int i = 0; i < numberOfItemsToBeAdded; i++) {
+            indexItemsSelected[i] = random.nextInt(items.size());
+        }
+        List<WebElement> itemsSelected = new ArrayList<>();
+        for (int indexSelectedItem: indexItemsSelected) {
+            itemsSelected.add(items.get(indexSelectedItem));
+        }
+        return itemsSelected;
+    }
+
+    public void addToCartSelectedItem(WebElement selectedProduct) {
         tryAddItemToShoppingCart(selectedProduct);
+    }
+
+    public ShoppingCartSummaryPO clickProcessToCheckOutButton(){
         WebElement processToCheckOutButton = waitUntil(buttonProcessToCheckOutXpath);
-        processToCheckOutButton.click();
+        if (waitUntilVisibilityOfElement(processToCheckOutButton))
+            processToCheckOutButton.click();
         return this.getShoppingCartSummaryPO();
     }
 
     private void tryAddItemToShoppingCart(WebElement selectedProduct)  {
+
+        addToCartXpath = String.format(addToCartXpath, selectedProduct.getAttribute("alt"));
+
         WebElement addToCartButton = waitUntil(By.xpath(addToCartXpath));
-        browser.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         for (int i = 0; i < _verifyingBannerAddedShoppingCartRetries; i++) {
             try {
                 scrollAndHoverElement(selectedProduct);
+                ThreadSleepHelper.threadSleep(500);
                 addToCartButton.click();
                if(waitUntilVisibilityOfElement(bannerAddedProductToShoppingCart))
                    break;

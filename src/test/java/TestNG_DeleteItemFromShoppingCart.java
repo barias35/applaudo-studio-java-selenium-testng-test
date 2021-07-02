@@ -27,9 +27,8 @@ public class TestNG_DeleteItemFromShoppingCart extends BaseTest {
                 WebElement selectedItem = mainPage.selectRandomItem(itemForSearch);
                 Assert.assertNotNull(selectedItem, "Random item couldn't be selected, please verify!");
                 String itemName = selectedItem.getAttribute("alt");
-
-                ShoppingCartSummaryPO shoppingCartSummaryPO = mainPage.addToCartSelectedItem(selectedItem);
-
+                mainPage.addToCartSelectedItem(selectedItem);
+                ShoppingCartSummaryPO shoppingCartSummaryPO = mainPage.clickProcessToCheckOutButton();
                 Assert.assertTrue(shoppingCartSummaryPO.isAddedSelectedItem(itemName),
                         String.format("The item %s wasn't added succesfully to the cart!", itemName));
 

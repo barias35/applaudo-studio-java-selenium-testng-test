@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import utils.FluentWaitHandler;
+import utils.ThreadSleepHelper;
 
 
 public class BasePO extends FluentWaitHandler {
@@ -25,7 +26,7 @@ public class BasePO extends FluentWaitHandler {
         try{
             JavascriptExecutor js = (JavascriptExecutor)this.browser;
             js.executeScript("arguments[0].scrollIntoView();", webElement);
-            Thread.sleep(500);
+            ThreadSleepHelper.threadSleep(1000);
         }catch (Exception ex){
 
         }
@@ -34,7 +35,7 @@ public class BasePO extends FluentWaitHandler {
     public void scrollAndHoverElement(WebElement webElement)  {
         try {
             scrollToVisibleElement(webElement);
-            Thread.sleep(500);
+            ThreadSleepHelper.threadSleep(1000);
             hoverToElement(webElement);
         }catch (Exception ex){
 

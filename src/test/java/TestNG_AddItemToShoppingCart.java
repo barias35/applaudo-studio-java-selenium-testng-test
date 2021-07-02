@@ -8,16 +8,16 @@ import pages.AutomationPO;
 import pages.ShoppingCartSummaryPO;
 import utils.Config;
 
+import java.util.List;
+
 public class TestNG_AddItemToShoppingCart extends BaseTest {
 
     AutomationPO mainPage = null;
 
     @BeforeMethod
     private void setUp(){
-        //Using ChromeOptions
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(false);
-        this.browserInitializer(options);
+        //You can also initialize with ChromeOptions
+        this.browserInitializer();
         this.setUp(Config.BASE_URI);
         mainPage = new AutomationPO(this.browser);
     }
@@ -31,8 +31,8 @@ public class TestNG_AddItemToShoppingCart extends BaseTest {
             WebElement selectedItem = mainPage.selectRandomItem(productForSearch);
             Assert.assertNotNull(selectedItem, "Random item couldn't be selected, please verify!");
             String itemName = selectedItem.getAttribute("alt");
-
-            ShoppingCartSummaryPO shoppingCartSummaryPO = mainPage.addToCartSelectedItem(selectedItem);
+            mainPage.addToCartSelectedItem(selectedItem);
+            ShoppingCartSummaryPO shoppingCartSummaryPO = mainPage.clickProcessToCheckOutButton();
             Assert.assertTrue(shoppingCartSummaryPO.isAddedSelectedItem(itemName),
                     String.format("The item %s wasn't added succesfully to the cart!", itemName));
 
