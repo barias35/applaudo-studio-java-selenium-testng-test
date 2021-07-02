@@ -54,9 +54,11 @@ I needed TestNG and Selenium i configured [pom file](/pom.xml) with the plugins 
 
 ![image](https://user-images.githubusercontent.com/47786738/124220368-c6980580-dacb-11eb-9383-3d824a0bde06.png)
 
+
 ### Notes
 
 - This project was build for Google Chrome, but if you want to change you're free 
+
 
 
 ### Important
@@ -65,6 +67,8 @@ My experience with this challenge was amazing, adding item to the shopping cart 
 
 
 I realize i can improve, more abstraction for the driver handler, parallel testing and so on.
+
+
 
 
 
