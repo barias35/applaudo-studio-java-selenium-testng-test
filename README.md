@@ -63,7 +63,8 @@ I also needed "jackson-databind" dependency for mapping json response into a lis
 * Then select TestNG and the option "Test king" select "All in package"
 
 
-![image](https://user-images.githubusercontent.com/47786738/124063702-78b6cb00-da01-11eb-9959-9a9daf2d3c33.png)
+![image](https://user-images.githubusercontent.com/47786738/124220585-0eb72800-dacc-11eb-800f-1d9d9980c24e.png)
+
 
 
 * *You must select the sdk in my case i used Java 11 (11.0.7) if you do not have it* 
