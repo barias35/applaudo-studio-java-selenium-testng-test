@@ -20,7 +20,8 @@ I needed TestNG and Selenium i configured [pom file](/pom.xml) with the plugins 
 
 * Then open IntelliJ go to this option
 
-![image](https://user-images.githubusercontent.com/47786738/124063522-12ca4380-da01-11eb-9bef-25bdd0e4e997.png)
+![image](https://user-images.githubusercontent.com/47786738/124221180-3a86dd80-dacd-11eb-8202-0725bd9898dc.png)
+
 
 
 * Then click on + button 
@@ -48,6 +49,15 @@ I needed TestNG and Selenium i configured [pom file](/pom.xml) with the plugins 
 ![image](https://user-images.githubusercontent.com/47786738/124220368-c6980580-dacb-11eb-9383-3d824a0bde06.png)
 
 
+```diff
+
+#Important red
+
+```
+
+##My experience with this challenge was amazing, adding item to the shopping cart was a bit difficult due the unstability of the page, sometimes doesn't work i tried to figure out a way to avoid this but i couldn't most of the time will work.
+
+I realize i can improve 
 
 
 Thank you! Applaudo Studio
