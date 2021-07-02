@@ -9,7 +9,7 @@ public class TestNG_SearchItems extends BaseTest {
     AutomationPO mainPage = null;
 
     @BeforeMethod
-    private void setUp(){
+    private void setUp() {
         this.browserInitializer();
         this.setUp(Config.BASE_URI);
         mainPage = new AutomationPO(this.browser);
@@ -18,7 +18,7 @@ public class TestNG_SearchItems extends BaseTest {
     @Test
     public void testSearchingExistingItems() {
         String productForSearch = "Dress";
-        try{
+        try {
             Assert.assertTrue(mainPage.isMainPageIsVisible(), "Automation page doesn't shows correctly");
             Assert.assertTrue(mainPage.searchItems(productForSearch).size() > 0, "The items weren't found successfully!");
         } catch (AssertionError ex) {
@@ -31,7 +31,7 @@ public class TestNG_SearchItems extends BaseTest {
     @Test
     public void testSearchingNotExistingItems() {
         String productForSearch = "Qa Automation";
-        try{
+        try {
             Assert.assertTrue(mainPage.isMainPageIsVisible(), "Automation page doesn't shows correctly");
             Assert.assertEquals(mainPage.searchItems(productForSearch).size(), 0, "The items weren't found successfully!");
             Assert.assertTrue(mainPage.isVisibleNotFoundItemsAlert(), "The items weren't found successfully!");

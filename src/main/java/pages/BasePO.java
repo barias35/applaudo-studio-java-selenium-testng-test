@@ -33,12 +33,9 @@ public class BasePO extends FluentWaitHandler {
     }
 
     public void scrollAndHoverElement(WebElement webElement)  {
-        try {
-            scrollToVisibleElement(webElement);
-            ThreadSleepHelper.threadSleep(1000);
-            hoverToElement(webElement);
-        }catch (Exception ex){
+        scrollToVisibleElement(webElement);
+        ThreadSleepHelper.threadSleep(1000);
+        hoverToElement(webElement);
 
-        }
     }
 }

@@ -15,7 +15,7 @@ public class TestNG_AddItemToShoppingCart extends BaseTest {
     AutomationPO mainPage = null;
 
     @BeforeMethod
-    private void setUp(){
+    private void setUp() {
         //You can also initialize with ChromeOptions
         this.browserInitializer();
         this.setUp(Config.BASE_URI);
@@ -25,7 +25,7 @@ public class TestNG_AddItemToShoppingCart extends BaseTest {
     @Test
     public void testAddingItemToShoppingCart() {
         String productForSearch = "Dress";
-        try{
+        try {
             Assert.assertTrue(mainPage.isMainPageIsVisible(), "Automation page doesn't shows correctly");
 
             WebElement selectedItem = mainPage.selectRandomItem(productForSearch);
@@ -36,15 +36,15 @@ public class TestNG_AddItemToShoppingCart extends BaseTest {
             Assert.assertTrue(shoppingCartSummaryPO.isAddedSelectedItem(itemName),
                     String.format("The item %s wasn't added succesfully to the cart!", itemName));
 
-        }catch (AssertionError ex){
-            throw  ex;
-        }catch (Exception ex){
+        } catch (AssertionError ex) {
+            throw ex;
+        } catch (Exception ex) {
             throw ex;
         }
     }
 
     @AfterMethod
-    private void cleanUp(){
+    private void cleanUp() {
         this.tearDown();
     }
 }

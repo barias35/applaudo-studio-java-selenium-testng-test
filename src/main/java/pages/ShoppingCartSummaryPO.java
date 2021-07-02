@@ -17,26 +17,26 @@ public class ShoppingCartSummaryPO extends BasePO {
 
     private By bannerEmptyCartXpath = By.xpath("//p[text()='Your shopping cart is empty.']");
 
-    public ShoppingCartSummaryPO(WebDriver browser){
+    public ShoppingCartSummaryPO(WebDriver browser) {
         super(browser);
         PageFactory.initElements(browser, this);
     }
 
-    public boolean isAddedSelectedItem(String itemName){
+    public boolean isAddedSelectedItem(String itemName) {
         scrollToVisibleElement(this.columnProductName);
-        if(waitUntilVisibilityOfElement(this.columnProductName))
-           return this.columnProductName.getText().equalsIgnoreCase(itemName);
+        if (waitUntilVisibilityOfElement(this.columnProductName))
+            return this.columnProductName.getText().equalsIgnoreCase(itemName);
 
         return false;
     }
 
-    public void deleteAddedItem(){
+    public void deleteAddedItem() {
         hoverToElement(this.dropDownMyShoppingCart);
         if (waitUntilVisibilityOfElement(this.iconButtonRemoveItemFromShoppingCart))
             this.iconButtonRemoveItemFromShoppingCart.click();
     }
 
-    public boolean isAddedItemDeleted(){
+    public boolean isAddedItemDeleted() {
         return waitUntilVisibilityOfElement(this.bannerEmptyCartXpath);
     }
 }

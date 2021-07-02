@@ -16,6 +16,10 @@ import java.util.concurrent.TimeUnit;
 
 public class AutomationPO extends BasePO {
 
+    private final By listOfProductsXpath = By.xpath("//a[@class='product_img_link']//img");
+    private final By buttonProcessToCheckOutXpath = By.xpath("//a[@title='Proceed to checkout']");
+    private final By bannerAddedProductToShoppingCart = By.xpath("//div[contains(@class,'layer_cart_cart col-xs-12')]");
+    private final int _verifyingBannerAddedShoppingCartRetries = 3;
     @FindBy(xpath = "//ul[contains(@class,'sf-menu clearfix')]")
     private WebElement mainMenu;
     @FindBy(id = "search_query_top")
@@ -28,25 +32,19 @@ public class AutomationPO extends BasePO {
     private WebElement footerLabelPhoneNumber;
     @FindBy(css = "section#block_contact_infos>div>ul>li:nth-of-type(3)>span>a")
     private WebElement footerLabelEmailAddress;
-
     private String addToCartXpath = "//img[@alt='%s']/ancestor::div[@class='product-container']/div/div[@class='button-container']/a[@title='Add to cart']";
-    private final By listOfProductsXpath = By.xpath("//a[@class='product_img_link']//img");
-    private final By buttonProcessToCheckOutXpath = By.xpath("//a[@title='Proceed to checkout']");
-    private final By bannerAddedProductToShoppingCart = By.xpath("//div[contains(@class,'layer_cart_cart col-xs-12')]");
-    private final int _verifyingBannerAddedShoppingCartRetries = 3;
-
     private ShoppingCartSummaryPO shoppingCartSummaryPO;
+
+    public AutomationPO(WebDriver browser) {
+        super(browser);
+        PageFactory.initElements(this.browser, this);
+    }
 
     public ShoppingCartSummaryPO getShoppingCartSummaryPO() {
         if (shoppingCartSummaryPO == null) {
             shoppingCartSummaryPO = new ShoppingCartSummaryPO(this.browser);
         }
         return shoppingCartSummaryPO;
-    }
-
-    public AutomationPO(WebDriver browser) {
-        super(browser);
-        PageFactory.initElements(this.browser, this);
     }
 
     public boolean isMainPageIsVisible() {
@@ -77,11 +75,11 @@ public class AutomationPO extends BasePO {
         scrollToVisibleElement(footerLabelEmailAddress);
         waitUntilVisibilityOfElement(footerLabelEmailAddress);
         return footerLabelLocation.getText().contains(address) &&
-                footerLabelPhoneNumber.getText().equalsIgnoreCase(phoneNumber)&&
+                footerLabelPhoneNumber.getText().equalsIgnoreCase(phoneNumber) &&
                 footerLabelEmailAddress.getText().equalsIgnoreCase(emailAddress);
     }
 
-    public WebElement selectRandomItem(String itemToSearch)  {
+    public WebElement selectRandomItem(String itemToSearch) {
 
         List<WebElement> items = searchItems(itemToSearch);
 
@@ -93,23 +91,23 @@ public class AutomationPO extends BasePO {
         return items.get(selectedItemIndex);
     }
 
-    public List<WebElement> selectRandomMultipleItems(String itemToSearch, int numberOfItemsToBeAdded)  {
+    public List<WebElement> selectRandomMultipleItems(String itemToSearch, int numberOfItemsToBeAdded) {
 
         List<WebElement> items = searchItems(itemToSearch);
 
         if (items.size() == 0)
             return new ArrayList<>();
 
-        if(numberOfItemsToBeAdded > items.size())
+        if (numberOfItemsToBeAdded > items.size())
             numberOfItemsToBeAdded = items.size();
 
         Random random = new Random();
-        int [] indexItemsSelected = new int[numberOfItemsToBeAdded];
+        int[] indexItemsSelected = new int[numberOfItemsToBeAdded];
         for (int i = 0; i < numberOfItemsToBeAdded; i++) {
             indexItemsSelected[i] = random.nextInt(items.size());
         }
         List<WebElement> itemsSelected = new ArrayList<>();
-        for (int indexSelectedItem: indexItemsSelected) {
+        for (int indexSelectedItem : indexItemsSelected) {
             itemsSelected.add(items.get(indexSelectedItem));
         }
         return itemsSelected;
@@ -119,14 +117,14 @@ public class AutomationPO extends BasePO {
         tryAddItemToShoppingCart(selectedProduct);
     }
 
-    public ShoppingCartSummaryPO clickProcessToCheckOutButton(){
+    public ShoppingCartSummaryPO clickProcessToCheckOutButton() {
         WebElement processToCheckOutButton = waitUntil(buttonProcessToCheckOutXpath);
         if (waitUntilVisibilityOfElement(processToCheckOutButton))
             processToCheckOutButton.click();
         return this.getShoppingCartSummaryPO();
     }
 
-    private void tryAddItemToShoppingCart(WebElement selectedProduct)  {
+    private void tryAddItemToShoppingCart(WebElement selectedProduct) {
 
         addToCartXpath = String.format(addToCartXpath, selectedProduct.getAttribute("alt"));
 
@@ -136,8 +134,8 @@ public class AutomationPO extends BasePO {
                 scrollAndHoverElement(selectedProduct);
                 ThreadSleepHelper.threadSleep(500);
                 addToCartButton.click();
-               if(waitUntilVisibilityOfElement(bannerAddedProductToShoppingCart))
-                   break;
+                if (waitUntilVisibilityOfElement(bannerAddedProductToShoppingCart))
+                    break;
 
             } catch (Exception ex) {
             }
