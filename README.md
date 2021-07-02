@@ -49,9 +49,9 @@ I needed TestNG and Selenium i configured [pom file](/pom.xml) with the plugins 
 ![image](https://user-images.githubusercontent.com/47786738/124220368-c6980580-dacb-11eb-9383-3d824a0bde06.png)
 
 
-```diff
+```diff red
 
-#Important red
+# Important red
 
 ```
 
