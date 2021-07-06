@@ -25,7 +25,7 @@ public class TestNG_DeleteItemFromShoppingCart extends BaseTest {
 
             Assert.assertTrue(mainPage.isMainPageVisible(), "Automation page doesn't shows correctly");
 
-            WebElement selectedItem = mainPage.selectRandomItem(itemForSearch);
+            WebElement selectedItem = mainPage.selectRandomItem(mainPage.searchItems(itemForSearch));
             Assert.assertNotNull(selectedItem, "Random item couldn't be selected, please verify!");
             String itemName = selectedItem.getAttribute("alt");
             mainPage.addToCartSelectedItem(selectedItem);

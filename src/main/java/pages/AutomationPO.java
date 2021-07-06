@@ -75,9 +75,7 @@ public class AutomationPO extends BasePO {
                 footerLabelEmailAddress.getText().equalsIgnoreCase(emailAddress);
     }
 
-    public WebElement selectRandomItem(String itemToSearch) {
-
-        List<WebElement> items = searchItems(itemToSearch);
+    public WebElement selectRandomItem(List<WebElement> items) {
 
         if (items.size() == 0)
             return null;
